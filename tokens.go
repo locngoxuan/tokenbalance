@@ -2,6 +2,7 @@ package tokenbalance
 
 import (
 	"math/big"
+	"reflect"
 	"strings"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -87,46 +88,54 @@ func bindToken(address common.Address, caller bind.ContractCaller, transactor bi
 //
 // Solidity: function balanceOf(_owner address) constant returns(balance uint256)
 func (_Token *tokenCaller) BalanceOf(opts *bind.CallOpts, _owner common.Address) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
+	out := new([]interface{})
 	err := _Token.contract.Call(opts, out, "balanceOf", _owner)
-	return *ret0, err
+	val := reflect.ValueOf(out).Elem()
+	if val.Len() == 0 {
+		return new(big.Int), err
+	}
+	v := val.Index(0)
+	return v.Interface().(*big.Int), err
 }
 
 // Decimals is a free data retrieval call binding the contract method 0x313ce567.
 //
 // Solidity: function decimals() constant returns(uint256)
 func (_Token *tokenCaller) Decimals(opts *bind.CallOpts) (*big.Int, error) {
-	var (
-		ret0 = new(*big.Int)
-	)
-	out := ret0
+	out := new([]interface{})
 	err := _Token.contract.Call(opts, out, "decimals")
-	return *ret0, err
+	val := reflect.ValueOf(out).Elem()
+	if val.Len() == 0 {
+		return new(big.Int), err
+	}
+	v := val.Index(0)
+	return v.Interface().(*big.Int), err
 }
 
 // Name is a free data retrieval call binding the contract method 0x06fdde03.
 //
 // Solidity: function name() constant returns(string)
 func (_Token *tokenCaller) Name(opts *bind.CallOpts) (string, error) {
-	var (
-		ret0 = new(string)
-	)
-	out := ret0
+	out := new([]interface{})
 	err := _Token.contract.Call(opts, out, "name")
-	return *ret0, err
+	val := reflect.ValueOf(out).Elem()
+	if val.Len() == 0 {
+		return "", err
+	}
+	v := val.Index(0)
+	return v.Interface().(string), err
 }
 
 // Symbol is a free data retrieval call binding the contract method 0x95d89b41.
 //
 // Solidity: function symbol() constant returns(string)
 func (_Token *tokenCaller) Symbol(opts *bind.CallOpts) (string, error) {
-	var (
-		ret0 = new(string)
-	)
-	out := ret0
+	out := new([]interface{})
 	err := _Token.contract.Call(opts, out, "symbol")
-	return *ret0, err
+	val := reflect.ValueOf(out).Elem()
+	if val.Len() == 0 {
+		return "", err
+	}
+	v := val.Index(0)
+	return v.Interface().(string), err
 }
